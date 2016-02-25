@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+
+   <head>
+	
+      <script type="text/javascript">
+		
+         var db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024);
+         var msg;
+			var ant;
+         db.transaction(function (tx) {
+            tx.executeSql('CREATE TABLE IF NOT EXISTS FISH (id unique, name, price)');
+            tx.executeSql('INSERT INTO FISH (id, name, price) VALUES (1, "Kendai",200)');
+            tx.executeSql('INSERT INTO FISH (id, name,price) VALUES (2, "Catla",400)');
+            
+         });
+
+       
+
+      function myFunction(temp)
+      {   
+         db.transaction(function (tx) {
+            tx.executeSql('SELECT * FROM FISH', [], function (tx, results) {
+            
+               var len = results.rows.length, i;
+               msg = "<p>Found rows: " + len + "</p>";
+               //document.querySelector('#status').innerHTML +=  msg;
+               
+               //for (i = 0; i < len; i++){
+                  //msg = "<p><b>" + results.rows.item(i).name+ "</b></p>";
+                  msg= results.rows.item(temp-1).name;
+                  ant=results.rows.item(temp-1).price;
+                  //msg+=ant;
+                  document.getElementById(temp).innerHTML =  msg;
+                  //arr[i]=msg;
+                  //alert(arr[i]);
+               
+               //}
+            }, null);
+         });
+      }
+            
+      function formDetails()
+      {
+       var a11=document.Details.a1
+         var temp=document.Details.a1.value
+         if(a11.checked)
+         {
+          alert(ant);
+       }
+    }
+
+function formDetails1()
+      {
+       var a21=document.Details.a2
+         var temp1=document.Details.a2.value
+         if(a21.checked)
+         {
+          alert(ant);
+       }
+    }
+
+function formDetails2()
+      {
+       var a31=document.Details.a3
+         var tempr=document.Details.a3.value
+         if(a31.checked)
+         {
+          alert(ant);
+       }
+    }
+     </script>
+		
+   </head>
+	
+   <body bgcolor="yellow">
+      <div id="status" name="status">
+
+      <marquee><img class="img-responsive" src="catla-photo.jpg">  </img></marquee>
+      <p id="1" onclick="myFunction(1)">"Fish type 1.</p>
+      <form name='Details' onSubmit="return formDetails();">   
+      <input type="radio" name="a1" value="Catla=Catla" />Click the fish to see its Price.
+      <button type="button"  onclick="formDetails();">Buy!</button>
+</div>
+
+
+<div>
+<p id="2" onclick="myFunction(2)">"Fish type 2"</p>
+<marquee><img class="img-responsive" src="rohu.jpg" width=250>  </img></marquee>
+<!--form name='new' onSubmit="return formDetails1();"-->   
+      <input type="radio" name="a2" value="Kate" />Click the fish to see its Price.
+     <button type="button" onclick="formDetails1();">Buy!</button>
+
+</div>
+
+
+<marquee><img class="img-responsive" src="kendai.jpg" width=250>  </img></marquee>
+<p id="3" onclick="myFunction(3)">"Catla Price"</p>
+<input type="radio" name="a3" value="Katee" />Click the fish to see its Price.
+<button type="button" onclick="formDetails2();">Buy!</button>
+
+
+<a href="order.html">Order</a>
+      </body>
+	
+</html>
